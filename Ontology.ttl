@@ -48,6 +48,19 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Vehicle".
 
+:ContactPoint a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Contact point".
+
+:Residency a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Residency".
+
+:PastResidency a owl:Class;
+	rdfs:subClassOf :Residency;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Past residency".
+
 
 :subcontractorHasPerson a owl:ObjectProperty;
 	rdfs:domain :Subcontractor;
@@ -67,6 +80,18 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Person has certification".
 
+:personHasContactPoint a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :ContactPoint;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has contact point".
+
+:contactPointHasResidency a owl:ObjectProperty;
+	rdfs:domain :ContactPoint;
+	rdfs:range :Residency;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Contact point has residency".
+
 :businessHasAccreditation a owl:ObjectProperty;
 	rdfs:domain :Business;
 	rdfs:range :Accreditation;
@@ -78,3 +103,88 @@ this:schema a owl:Ontology;
 	rdfs:range :Vehicle;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Bona fide subcontractor has vehicle".
+
+
+:personFamilyName a owl:DatatypeProperty;
+	rdfs:domain :Person;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person family name".
+
+:personGivenName a owl:DatatypeProperty;
+	rdfs:domain :Person;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person given name".
+
+:personOtherNames a owl:DatatypeProperty;
+	rdfs:domain :Person;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person other names".
+
+:nationalInsuranceNumber a owl:DatatypeProperty;
+	rdfs:domain :Person;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "National Insurance number".
+
+:email a owl:DatatypeProperty;
+	rdfs:domain :ContactPoint;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "E-mail".
+
+:phoneNumber a owl:DatatypeProperty;
+	rdfs:domain :ContactPoint;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Phone number".
+
+:addressLine1 a owl:DatatypeProperty;
+	rdfs:domain :Residency;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Address line 1".
+
+:addressLine2 a owl:DatatypeProperty;
+	rdfs:domain :Residency;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Address line 2".
+
+:addressLine3 a owl:DatatypeProperty;
+	rdfs:domain :Residency;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Address line 3".
+
+:addressLine4 a owl:DatatypeProperty;
+	rdfs:domain :Residency;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Address line 4".
+
+:addressLine5 a owl:DatatypeProperty;
+	rdfs:domain :Residency;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Address line 5".
+
+:postalCode a owl:DatatypeProperty;
+	rdfs:domain :Residency;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Postal code".
+
+:residencyStart a owl:DatatypeProperty;
+	rdfs:domain :Residency;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Residency start".
+
+:residencyEnd a owl:DatatypeProperty;
+	rdfs:domain :PastResidency;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Residency end".

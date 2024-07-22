@@ -1,0 +1,80 @@
+@prefix :<http://example.com/schema/>.
+@prefix this:<http://example.com/>.
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl:<http://www.w3.org/2002/07/owl#>.
+@prefix xsd:<http://www.w3.org/2001/XMLSchema#>.
+
+
+this:schema a owl:Ontology;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Building compliance management ontology".
+
+:Subcontractor a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Subcontractor".
+
+:BonaFideSubcontractor a owl:Class;
+	rdfs:subClassOf :Subcontractor;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Bona fide subcontractor".
+
+:Business  a owl:Class;
+	rdfs:subClassOf :BonaFideSubcontractor;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Business".
+
+:Person a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person".
+
+:Certification a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Certification".
+
+:DisclosureAndBarringService a owl:Class;
+	rdfs:subClassOf :Certification;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Disclosure and Barring Service (DBS)".
+
+:Insurance a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Insurance".
+
+:Accreditation a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Accreditation".
+
+:Vehicle a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Vehicle".
+
+
+:subcontractorHasPerson a owl:ObjectProperty;
+	rdfs:domain :Subcontractor;
+	rdfs:range :Person;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Subcontractor has person".
+
+:bonaFideSubcontractorHasInsurance a owl:ObjectProperty;
+	rdfs:domain :BonaFideSubcontractor;
+	rdfs:range :Insurance;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Bona fide subcontractor has insurance".
+
+:personHasCertification a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :Certification;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has certification".
+
+:businessHasAccreditation a owl:ObjectProperty;
+	rdfs:domain :Business;
+	rdfs:range :Accreditation;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Business has accreditation".
+
+:bonaFideSubcontractorHasVehicle a owl:ObjectProperty;
+	rdfs:domain :BonaFideSubcontractor;
+	rdfs:range :Vehicle;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Bona fide subcontractor has vehicle".

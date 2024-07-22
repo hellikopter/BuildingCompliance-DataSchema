@@ -1,0 +1,11 @@
+root = true
+
+# All files
+[*]
+indent_style = space
+spelling_checkable_types = strings,identifiers,comments
+spelling_error_severity = warning
+
+# Xml files
+[*.xml]
+indent_size = 2

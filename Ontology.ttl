@@ -27,14 +27,28 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Person".
 
+:Kin a owl:Class;
+	rdfs:subClassOf :Person;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Kin".
+
+:EmergencyContactPerson a owl:Class;
+	rdfs:subClassOf :Person;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Emergency contact person".
+
 :Certification a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Certification".
 
-:DisclosureAndBarringService a owl:Class;
-	rdfs:subClassOf :Certification;
+#:DisclosureAndBarringService a owl:Class;
+#	rdfs:subClassOf :Certification;
+#	rdfs:isDefinedBy this:schema;
+#	rdfs:label "Disclosure and Barring Service (DBS)".
+
+:Liability a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Disclosure and Barring Service (DBS)".
+	rdfs:label "Liability".
 
 :Insurance a owl:Class;
 	rdfs:isDefinedBy this:schema;
@@ -61,6 +75,28 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Past residency".
 
+:GenderIdentity a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Gender identity".
+
+:PastGenderIdentity a owl:Class;
+	rdfs:subClassOf :GenderIdentity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Past gender identity".
+
+:Gender a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Gender".
+
+:Competency a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Competency".
+
+:PastCompetency a owl:Class;
+	rdfs:subClassOf :Competency;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Past competency".
+
 
 :subcontractorHasPerson a owl:ObjectProperty;
 	rdfs:domain :Subcontractor;
@@ -68,23 +104,47 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Subcontractor has person".
 
-:bonaFideSubcontractorHasInsurance a owl:ObjectProperty;
-	rdfs:domain :BonaFideSubcontractor;
-	rdfs:range :Insurance;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Bona fide subcontractor has insurance".
-
-:personHasCertification a owl:ObjectProperty;
-	rdfs:domain :Person;
-	rdfs:range :Certification;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Person has certification".
-
 :personHasContactPoint a owl:ObjectProperty;
 	rdfs:domain :Person;
 	rdfs:range :ContactPoint;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Person has contact point".
+
+:personHasKin a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :Kin;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has kin".
+
+:personHasEmergencyContactPerson a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :EmergencyContactPerson;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has emergency contact person".
+
+:personHasGenderIdentity a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :GenderIdentity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has gender identity".
+
+:personHasCompetency a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :Competency;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has competency".
+
+:competencyHasCertification a owl:ObjectProperty;
+	rdfs:domain :Competency;
+	rdfs:range :Certification;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Competency has certification".
+
+:genderIdentityHasGender a owl:ObjectProperty;
+	rdfs:domain :GenderIdentity;
+	rdfs:range :Gender;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Gender identity has gender".
 
 :contactPointHasResidency a owl:ObjectProperty;
 	rdfs:domain :ContactPoint;
@@ -104,6 +164,23 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Bona fide subcontractor has vehicle".
 
+:bonaFideSubcontractorHasLiability a owl:ObjectProperty;
+	rdfs:domain :BonaFideSubcontractor;
+	rdfs:range :Liability;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Bona fide subcontractor has liability".
+
+:liabilityHasInsurance a owl:ObjectProperty;
+	rdfs:domain :Liability;
+	rdfs:range :Insurance;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Liability has insurance".
+
+:personDateOfBirth a owl:DatatypeProperty;
+	rdfs:domain :Person;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person date of birth".
 
 :personFamilyName a owl:DatatypeProperty;
 	rdfs:domain :Person;
@@ -188,3 +265,63 @@ this:schema a owl:Ontology;
 	rdfs:range xsd:date;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Residency end".
+
+:genderIdentityEnd a owl:DatatypeProperty;
+	rdfs:domain :PastGenderIdentity;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Gender identity end".
+
+:genderName a owl:DatatypeProperty;
+	rdfs:domain :Gender;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Gender name".
+
+:certificationName a owl:DatatypeProperty;
+	rdfs:domain :Certification;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Certification name".
+
+:competencyStart a owl:DatatypeProperty;
+	rdfs:domain :Competency;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Competency start".
+
+:competencyEnd a owl:DatatypeProperty;
+	rdfs:domain :PastCompetency;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Competency end".
+
+:liabilityPolicyNumber a owl:DatatypeProperty;
+	rdfs:domain :Liability;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Liability policy number".
+
+:liabilityAmount a owl:DatatypeProperty;
+	rdfs:domain :Liability;
+	rdfs:range xsd:decimal;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Liability amount".
+
+:liabilityExpiryDate a owl:DatatypeProperty;
+	rdfs:domain :Liability;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Liability expiry date".
+
+:insuranceName a owl:DatatypeProperty;
+	rdfs:domain :Insurance;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Insurance name".
+
+:subcontractorName a owl:DatatypeProperty;
+	rdfs:domain :Subcontractor;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Subcontractor name".

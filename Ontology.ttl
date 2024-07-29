@@ -7,9 +7,26 @@
 
 this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Building compliance management ontology".
+	rdfs:label "Building compliance management ontology.".
+
+:Organisation a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Organisation".
+
+:BuildingMaintenanceServiceProvider a owl:Class;
+	rdfs:subClassOf :Organisation;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Building maintenance service provider";
+	rdfs:comment "Organisation providing maintenance service to :PropertyManagementOrganisation's properties under :ServiceContract.".
+
+:PropertyManagementOrganisation a owl:Class;
+	rdfs:subClassOf :Organisation;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Property management organisation";
+	rdfs:comment "Organisation outsourcing maintenance of properties to :BuildingMaintenanceServiceProvider.".
 
 :Subcontractor a owl:Class;
+	rdfs:subClassOf :Organisation;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Subcontractor".
 
@@ -18,10 +35,13 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Bona fide subcontractor".
 
-:Business  a owl:Class;
-	rdfs:subClassOf :BonaFideSubcontractor;
+:ServiceContract a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Business".
+	rdfs:label "Service contract".
+
+:EmploymentContract a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Employment contract".
 
 :Person a owl:Class;
 	rdfs:isDefinedBy this:schema;
@@ -39,7 +59,8 @@ this:schema a owl:Ontology;
 
 :Certification a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Certification".
+	rdfs:label "Certification";
+	rdfs:comment "Type of qualification/training/accreditation, for example TrustMark, IOSH or DBS.".
 
 #:DisclosureAndBarringService a owl:Class;
 #	rdfs:subClassOf :Certification;
@@ -48,19 +69,18 @@ this:schema a owl:Ontology;
 
 :Liability a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Liability".
+	rdfs:label "Liability";
+	rdfs:comment "Instance of the :Insurance.".
 
 :Insurance a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Insurance".
+	rdfs:label "Insurance";
+	rdfs:comment "Type of insurance, for example 'Professional Indemnity Insurance'.".
 
 :Accreditation a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Accreditation".
-
-:Vehicle a owl:Class;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Vehicle".
+	rdfs:label "Accreditation";
+	rdfs:comment "Instance of :Certification awarded to :Organisation.".
 
 :ContactPoint a owl:Class;
 	rdfs:isDefinedBy this:schema;
@@ -74,6 +94,10 @@ this:schema a owl:Ontology;
 	rdfs:subClassOf :Residency;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Past residency".
+
+:Property a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Property".
 
 :GenderIdentity a owl:Class;
 	rdfs:isDefinedBy this:schema;
@@ -90,7 +114,8 @@ this:schema a owl:Ontology;
 
 :Competency a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Competency".
+	rdfs:label "Competency";
+	rdfs:comment "Instance of :Certification awarded to :Person.".
 
 :PastCompetency a owl:Class;
 	rdfs:subClassOf :Competency;
@@ -103,6 +128,18 @@ this:schema a owl:Ontology;
 	rdfs:range :Person;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Subcontractor has person".
+
+:subcontractorHasEmploymentContract a owl:ObjectProperty;
+	rdfs:domain :Subcontractor;
+	rdfs:range :EmploymentContract;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Subcontractor has employment contract".
+
+:personHasResidency a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :Residency;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has residency".
 
 :personHasContactPoint a owl:ObjectProperty;
 	rdfs:domain :Person;
@@ -134,6 +171,12 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Person has competency".
 
+:personHasEmploymentContract a owl:ObjectProperty;
+	rdfs:domain :Person;
+	rdfs:range :EmploymentContract;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person has employment contract".
+
 :competencyHasCertification a owl:ObjectProperty;
 	rdfs:domain :Competency;
 	rdfs:range :Certification;
@@ -146,35 +189,54 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Gender identity has gender".
 
-:contactPointHasResidency a owl:ObjectProperty;
-	rdfs:domain :ContactPoint;
-	rdfs:range :Residency;
+:residencyHasProperty a owl:ObjectProperty;
+	rdfs:domain :Residency;
+	rdfs:range :Property;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Contact point has residency".
+	rdfs:label "Residency has property".
 
-:businessHasAccreditation a owl:ObjectProperty;
-	rdfs:domain :Business;
+:organisationHasAccreditation a owl:ObjectProperty;
+	rdfs:domain :Organisation;
 	rdfs:range :Accreditation;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Business has accreditation".
+	rdfs:label "Organisation has accreditation".
 
-:bonaFideSubcontractorHasVehicle a owl:ObjectProperty;
-	rdfs:domain :BonaFideSubcontractor;
-	rdfs:range :Vehicle;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Bona fide subcontractor has vehicle".
-
-:bonaFideSubcontractorHasLiability a owl:ObjectProperty;
-	rdfs:domain :BonaFideSubcontractor;
+:organisationHasLiability a owl:ObjectProperty;
+	rdfs:domain :Organisation;
 	rdfs:range :Liability;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Bona fide subcontractor has liability".
+	rdfs:label "Organisation has liability".
+
+:bonaFideSubcontractorHasEmploymentContract a owl:ObjectProperty;
+	rdfs:domain :BonaFideSubcontractor;
+	rdfs:range :EmploymentContract;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Bona fide subcontractor has employment contract".
 
 :liabilityHasInsurance a owl:ObjectProperty;
 	rdfs:domain :Liability;
 	rdfs:range :Insurance;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Liability has insurance".
+
+:propertyManagementOrganisationHasServiceContract a owl:ObjectProperty;
+	rdfs:domain :PropertyManagementOrganisation;
+	rdfs:range :ServiceContract;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Property management organisation has service contract".
+
+:serviceContractHasProperty a owl:ObjectProperty;
+	rdfs:domain :ServiceContract;
+	rdfs:range :Property;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Service contract has property".
+
+:accreditationHasCertification a owl:ObjectProperty;
+	rdfs:domain :Accreditation;
+	rdfs:range :Certification;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Accreditation has certification".
+
 
 :personDateOfBirth a owl:DatatypeProperty;
 	rdfs:domain :Person;
@@ -219,43 +281,43 @@ this:schema a owl:Ontology;
 	rdfs:label "Phone number".
 
 :addressLine1 a owl:DatatypeProperty;
-	rdfs:domain :Residency;
+	rdfs:domain :Property;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Address line 1".
 
 :addressLine2 a owl:DatatypeProperty;
-	rdfs:domain :Residency;
+	rdfs:domain :Property;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Address line 2".
 
 :addressLine3 a owl:DatatypeProperty;
-	rdfs:domain :Residency;
+	rdfs:domain :Property;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Address line 3".
 
 :addressLine4 a owl:DatatypeProperty;
-	rdfs:domain :Residency;
+	rdfs:domain :Property;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Address line 4".
 
 :addressLine5 a owl:DatatypeProperty;
-	rdfs:domain :Residency;
+	rdfs:domain :Property;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Address line 5".
 
 :postalCode a owl:DatatypeProperty;
-	rdfs:domain :Residency;
+	rdfs:domain :Property;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Postal code".
 
 :residencyStart a owl:DatatypeProperty;
-	rdfs:domain :Residency;
+	rdfs:domain :Property;
 	rdfs:range xsd:date;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Residency start".
@@ -320,8 +382,14 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Insurance name".
 
-:subcontractorName a owl:DatatypeProperty;
-	rdfs:domain :Subcontractor;
+:organisationName a owl:DatatypeProperty;
+	rdfs:domain :Organisation;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Subcontractor name".
+	rdfs:label "Organisation name".
+
+:accreditationNumber a owl:DatatypeProperty;
+	rdfs:domain :Accreditation;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Accreditation number".

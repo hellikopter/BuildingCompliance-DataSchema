@@ -9,6 +9,10 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Building compliance management ontology.".
 
+
+# Types
+
+
 :Organisation a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Organisation".
@@ -43,6 +47,11 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Employment contract".
 
+:Perishable a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Perishable";
+	rdfs:comment "Thing that can expire".
+
 :Person a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Person".
@@ -57,17 +66,46 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Emergency contact person".
 
+:ContractManager a owl:Class;
+	rdfs:subClassOf :Person;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Contract manager".
+
+:Operative a owl:Class;
+	rdfs:subClassOf :Person;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Operative".
+
 :Certification a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Certification";
 	rdfs:comment "Type of qualification/training/accreditation, for example TrustMark, IOSH or DBS.".
 
-#:DisclosureAndBarringService a owl:Class;
-#	rdfs:subClassOf :Certification;
-#	rdfs:isDefinedBy this:schema;
-#	rdfs:label "Disclosure and Barring Service (DBS)".
+:InformationResource a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Information resource";
+	rdfs:comment "Document, policy, procedure, image/photo, etc..".
+
+:MaterialResource a owl:Class;
+	rdfs:subClassOf :Perishable;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Material resource";
+	rdfs:comment "Physical asset, for example raw material (brick) or tool (ladder).".
+
+:InventoryMaterialResource a owl:Class;
+	rdfs:subClassOf :MaterialResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Inventory material resource";
+	rdfs:comment "Physical asset stocked by in :BuildingMaintenanceServiceProvider.".
+
+:PreferredMaterialResource a owl:Class;
+	rdfs:subClassOf :MaterialResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Preferred material resource";
+	rdfs:comment "Physical asset favoured in :ServiceContract.".
 
 :Liability a owl:Class;
+	rdfs:subClassOf :Perishable;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Liability";
 	rdfs:comment "Instance of the :Insurance.".
@@ -78,6 +116,7 @@ this:schema a owl:Ontology;
 	rdfs:comment "Type of insurance, for example 'Professional Indemnity Insurance'.".
 
 :Accreditation a owl:Class;
+	rdfs:subClassOf :Perishable;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Accreditation";
 	rdfs:comment "Instance of :Certification awarded to :Organisation.".
@@ -87,40 +126,114 @@ this:schema a owl:Ontology;
 	rdfs:label "Contact point".
 
 :Residency a owl:Class;
+	rdfs:subClassOf :Perishable;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Residency".
-
-:PastResidency a owl:Class;
-	rdfs:subClassOf :Residency;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Past residency".
 
 :Property a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Property".
 
 :GenderIdentity a owl:Class;
+	rdfs:subClassOf :Perishable;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Gender identity".
-
-:PastGenderIdentity a owl:Class;
-	rdfs:subClassOf :GenderIdentity;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Past gender identity".
 
 :Gender a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Gender".
 
 :Competency a owl:Class;
+	rdfs:subClassOf :Perishable;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Competency";
 	rdfs:comment "Instance of :Certification awarded to :Person.".
 
-:PastCompetency a owl:Class;
-	rdfs:subClassOf :Competency;
+:WorkOrder a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Past competency".
+	rdfs:label "Work order";
+	rdfs:comment "Request from :PropertyManagementOrganisation under :ServiceContract to undertake work.".
+
+:WorkOrderFlow a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow";
+	rdfs:comment "Series of :WorkActivity steps that define work.".
+
+:WorkActivity a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity";
+	rdfs:comment "Stage of work, for example 'Asbestos survey', grouping related :WorkTask.".
+
+:SuspensionWorkActivity a owl:Class;
+	rdfs:subClassOf :WorkActivity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Suspension work activity".
+
+:CancellationWorkActivity a owl:Class;
+	rdfs:subClassOf :WorkActivity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Cancellation work activity".
+
+:WorkTask a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task".
+
+:WorkTaskType a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task type".
+
+:CollectionWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Collection work task type".
+
+:BooleanWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Boolean work task type".
+
+:DecimalWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Decimal work task type".
+
+:DateWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Date work task type".
+
+:DateTimeWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Date and time work task type".
+
+:DateTimeWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Date and time work task type".
+
+:ImageWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Image work task type".
+
+:PersonWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person work task type".
+
+:PersonSignatureWorkTaskType a owl:Class;
+	rdfs:subClassOf :PersonWorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person signature work task type".
+
+:MaterialResourceWorkTaskType a owl:Class;
+	rdfs:subClassOf :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Material resource work task type".
+
+
+# Object properties
 
 
 :subcontractorHasPerson a owl:ObjectProperty;
@@ -237,6 +350,129 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Accreditation has certification".
 
+:buildingMaintenanceServiceProviderHasInformationResource a owl:ObjectProperty;
+	rdfs:domain :BuildingMaintenanceServiceProvider;
+	rdfs:range :InformationResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Building maintenance service provider has information resource".
+
+:buildingMaintenanceServiceProviderHasInventoryMaterialResource a owl:ObjectProperty;
+	rdfs:domain :BuildingMaintenanceServiceProvider;
+	rdfs:range :InventoryMaterialResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Building maintenance service provider has inventory material resource".
+
+:inventoryMaterialResourceHasInformationResource a owl:ObjectProperty;
+	rdfs:domain :InventoryMaterialResource;
+	rdfs:range :InformationResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Material resource has inventory information resource".
+
+:serviceContractHasPreferredMaterialResource a owl:ObjectProperty;
+	rdfs:domain :ServiceContract;
+	rdfs:range :PreferredMaterialResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Service contract has preferred material resource".
+
+:serviceContractHasWorkOrder a owl:ObjectProperty;
+	rdfs:domain :ServiceContract;
+	rdfs:range :WorkOrder;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Service contract has work order".
+
+:serviceContractHasContractManager a owl:ObjectProperty;
+	rdfs:domain :ServiceContract;
+	rdfs:range :ContractManager;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Service contract has contract manager".
+
+:workOrderHasProperty a owl:ObjectProperty;
+	rdfs:domain :WorkOrder;
+	rdfs:range :Property;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order has property".
+
+:workOrderHasContractManager a owl:ObjectProperty;
+	rdfs:domain :WorkOrder;
+	rdfs:range :ContractManager;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order has contract manager".
+
+:workOrderHasWorkOrderFlow a owl:ObjectProperty;
+	rdfs:domain :WorkOrder;
+	rdfs:range :WorkOrderFlow;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order has work order flow".
+
+:workOrderFlowHasSuspensionWorkActivity a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlow;
+	rdfs:range :SuspensionWorkActivity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow has suspension work activity".
+
+:workOrderFlowHasCancellationWorkActivity a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlow;
+	rdfs:range :CancellationWorkActivity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow has cancellation work activity".
+
+:workActivityHasWorkOrderFlow a owl:ObjectProperty;
+	rdfs:domain :WorkActivity;
+	rdfs:range :WorkOrderFlow;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity has work order flow".
+
+:workActivityIsFollowedByWorkActivity a owl:ObjectProperty;
+	rdfs:domain :WorkActivity;
+	rdfs:range :WorkActivity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity is followed by work activity".
+
+:workActivityHasWorkTask a owl:ObjectProperty;
+	rdfs:domain :WorkActivity;
+	rdfs:range :WorkTask;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity has work task".
+
+:workActivityHasOperative a owl:ObjectProperty;
+	rdfs:domain :WorkActivity;
+	rdfs:range :Operative;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity has operative".
+
+:workTaskIsFollowedByWorkTask a owl:ObjectProperty;
+	rdfs:domain :WorkTask;
+	rdfs:range :WorkTask;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task is followed by work task".
+
+:workTaskHasWorkTaskType a owl:ObjectProperty;
+	rdfs:domain :WorkTask;
+	rdfs:range :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task has work task type".
+
+:personWorkTaskTypeHasPerson a owl:ObjectProperty;
+	rdfs:domain :PersonWorkTaskType;
+	rdfs:range :Person;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person work task has person".
+
+:imageWorkTaskTypeHasInformationResource a owl:ObjectProperty;
+	rdfs:domain :ImageWorkTaskType;
+	rdfs:range :InformationResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Image work task has information resource".
+
+:materialResourceWorkTaskTypeHasMaterialResource a owl:ObjectProperty;
+	rdfs:domain :MaterialResourceWorkTaskType;
+	rdfs:range :MaterialResource;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Material resource work task has material resource".
+
+
+# Data type properties
+
 
 :personDateOfBirth a owl:DatatypeProperty;
 	rdfs:domain :Person;
@@ -322,18 +558,6 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Residency start".
 
-:residencyEnd a owl:DatatypeProperty;
-	rdfs:domain :PastResidency;
-	rdfs:range xsd:date;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Residency end".
-
-:genderIdentityEnd a owl:DatatypeProperty;
-	rdfs:domain :PastGenderIdentity;
-	rdfs:range xsd:date;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Gender identity end".
-
 :genderName a owl:DatatypeProperty;
 	rdfs:domain :Gender;
 	rdfs:range xsd:string;
@@ -352,12 +576,6 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Competency start".
 
-:competencyEnd a owl:DatatypeProperty;
-	rdfs:domain :PastCompetency;
-	rdfs:range xsd:date;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Competency end".
-
 :liabilityPolicyNumber a owl:DatatypeProperty;
 	rdfs:domain :Liability;
 	rdfs:range xsd:string;
@@ -369,12 +587,6 @@ this:schema a owl:Ontology;
 	rdfs:range xsd:decimal;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Liability amount".
-
-:liabilityExpiryDate a owl:DatatypeProperty;
-	rdfs:domain :Liability;
-	rdfs:range xsd:date;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Liability expiry date".
 
 :insuranceName a owl:DatatypeProperty;
 	rdfs:domain :Insurance;
@@ -393,3 +605,21 @@ this:schema a owl:Ontology;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Accreditation number".
+
+:informationResourceName a owl:DatatypeProperty;
+	rdfs:domain :InformationResource;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Information resource name".
+
+:materialResourceName a owl:DatatypeProperty;
+	rdfs:domain :MaterialResource;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Material resource name".
+
+:expiryDate a owl:DatatypeProperty;
+	rdfs:domain :Perishable;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Expiry date".

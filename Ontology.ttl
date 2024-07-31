@@ -176,7 +176,8 @@ this:schema a owl:Ontology;
 
 :WorkTask a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task".
+	rdfs:label "Work task";
+	rdfs:comment "Specific job, observation or task, for example 'Asbestos location' or 'Photos taken before work'.".
 
 :WorkTaskType a owl:Class;
 	rdfs:isDefinedBy this:schema;
@@ -231,6 +232,10 @@ this:schema a owl:Ontology;
 	rdfs:subClassOf :WorkTaskType;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Material resource work task type".
+
+:WorkTaskOutcome a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task outcome".
 
 
 # Object properties
@@ -452,6 +457,12 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task has work task type".
 
+:workTaskHasWorkTaskOutcome a owl:ObjectProperty;
+	rdfs:domain :WorkTask;
+	rdfs:range :WorkTaskOutcome;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task has work task outcome".
+
 :personWorkTaskTypeHasPerson a owl:ObjectProperty;
 	rdfs:domain :PersonWorkTaskType;
 	rdfs:range :Person;
@@ -623,3 +634,15 @@ this:schema a owl:Ontology;
 	rdfs:range xsd:date;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Expiry date".
+
+:workTaskName a owl:DatatypeProperty;
+	rdfs:domain :WorkTask;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task name".
+
+:workTaskOutcomeValue a owl:DatatypeProperty;
+	rdfs:domain :WorkTaskOutcome;
+	rdfs:range :WorkTaskType;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task outcome value".

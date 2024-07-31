@@ -40,6 +40,7 @@ this:schema a owl:Ontology;
 	rdfs:label "Bona fide subcontractor".
 
 :ServiceContract a owl:Class;
+	rdfs:subClassOf :Perishable;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Service contract".
 
@@ -564,7 +565,7 @@ this:schema a owl:Ontology;
 	rdfs:label "Postal code".
 
 :residencyStart a owl:DatatypeProperty;
-	rdfs:domain :Property;
+	rdfs:domain :Residency;
 	rdfs:range xsd:date;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Residency start".
@@ -646,3 +647,21 @@ this:schema a owl:Ontology;
 	rdfs:range :WorkTaskType;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task outcome value".
+
+:serviceContractStartDate a owl:DatatypeProperty;
+	rdfs:domain :ServiceContract;
+	rdfs:range xsd:date;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Expiry date".
+
+:workOrderFlowName a owl:DatatypeProperty;
+	rdfs:domain :WorkOrderFlow;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow name".
+
+:workActivityName a owl:DatatypeProperty;
+	rdfs:domain :WorkActivity;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity name".

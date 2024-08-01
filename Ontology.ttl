@@ -158,20 +158,20 @@ this:schema a owl:Ontology;
 :WorkOrderFlow a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order flow";
-	rdfs:comment "Series of :WorkActivity steps that define work.".
+	rdfs:comment "Series of :WorkOrderFlowStage that define work.".
 
-:WorkActivity a owl:Class;
+:WorkOrderFlowStage a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity";
-	rdfs:comment "Stage of work, for example 'Asbestos survey', grouping related :WorkTask.".
+	rdfs:label "Work order flow stage";
+	rdfs:comment "Grouping of related :WorkTask, for example 'Asbestos survey'.".
 
-:SuspensionWorkActivity a owl:Class;
-	rdfs:subClassOf :WorkActivity;
+:SuspensionStage a owl:Class;
+	rdfs:subClassOf :WorkOrderFlowStage;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Suspension work activity".
 
-:CancellationWorkActivity a owl:Class;
-	rdfs:subClassOf :WorkActivity;
+:CancellationStage a owl:Class;
+	rdfs:subClassOf :WorkOrderFlowStage;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Cancellation work activity".
 
@@ -179,6 +179,10 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task";
 	rdfs:comment "Specific job, observation or task, for example 'Asbestos location' or 'Photos taken before work'.".
+
+:WorkActivity a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity".
 
 :WorkTaskOutcome a owl:Class;
 	rdfs:isDefinedBy this:schema;
@@ -369,41 +373,47 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order has contract manager".
 
-:workOrderHasWorkOrderFlow a owl:ObjectProperty;
+:workOrderHasWorkActivity a owl:ObjectProperty;
 	rdfs:domain :WorkOrder;
-	rdfs:range :WorkOrderFlow;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order has work order flow".
-
-:workOrderFlowHasSuspensionWorkActivity a owl:ObjectProperty;
-	rdfs:domain :WorkOrderFlow;
-	rdfs:range :SuspensionWorkActivity;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order flow has suspension work activity".
-
-:workOrderFlowHasCancellationWorkActivity a owl:ObjectProperty;
-	rdfs:domain :WorkOrderFlow;
-	rdfs:range :CancellationWorkActivity;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order flow has cancellation work activity".
-
-:workActivityHasWorkOrderFlow a owl:ObjectProperty;
-	rdfs:domain :WorkActivity;
-	rdfs:range :WorkOrderFlow;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity has work order flow".
-
-:workActivityIsFollowedByWorkActivity a owl:ObjectProperty;
-	rdfs:domain :WorkActivity;
 	rdfs:range :WorkActivity;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity is followed by work activity".
+	rdfs:label "Work order has work activity".
 
-:workActivityHasWorkTask a owl:ObjectProperty;
-	rdfs:domain :WorkActivity;
+:workOrderFlowStageIsFollowedByWorkOrderFlow a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlowStage;
+	rdfs:range :WorkOrderFlowStage;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow stage is followed by work order flow stage".
+
+:workOrderFlowStageHasWorkOrderFlow a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlowStage;
+	rdfs:range :WorkOrderFlow;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow stage has work order flow".
+
+:workOrderFlowStageHasWorkTask a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlowStage;
 	rdfs:range :WorkTask;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity has work task".
+	rdfs:label "Work order flow stage has work task".
+
+:workActivityHasWorkOrderFlowStage a owl:ObjectProperty;
+	rdfs:domain :WorkActivity;
+	rdfs:range :WorkOrderFlowStage;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work activity has work order flow stage".
+
+:workTaskOutcomeHasWorkActivity a owl:ObjectProperty;
+	rdfs:domain :WorkTaskOutcome;
+	rdfs:range :WorkActivity;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task outcome has work activity".
+
+:workTaskOutcomeHasWorkTask a owl:ObjectProperty;
+	rdfs:domain :WorkTaskOutcome;
+	rdfs:range :WorkTask;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task outcome has work task".
 
 :workActivityHasOperative a owl:ObjectProperty;
 	rdfs:domain :WorkActivity;
@@ -416,12 +426,6 @@ this:schema a owl:Ontology;
 	rdfs:range :WorkTask;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task is followed by work task".
-
-:workTaskHasWorkTaskOutcome a owl:ObjectProperty;
-	rdfs:domain :WorkTask;
-	rdfs:range :WorkTaskOutcome;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task has work task outcome".
 
 :personWorkTaskOutcomeHasPerson a owl:ObjectProperty;
 	rdfs:domain :PersonWorkTaskOutcome;
@@ -440,6 +444,7 @@ this:schema a owl:Ontology;
 	rdfs:range :MaterialResource;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Material resource work task has material resource".
+
 
 # Data type properties
 
@@ -594,6 +599,12 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Expiry date".
 
+:workOrderFlowStageName a owl:DatatypeProperty;
+	rdfs:domain :WorkOrderFlowStage;
+	rdfs:range xsd:string;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task name".
+
 :workTaskName a owl:DatatypeProperty;
 	rdfs:domain :WorkTask;
 	rdfs:range xsd:string;
@@ -612,8 +623,8 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order flow name".
 
-:workActivityName a owl:DatatypeProperty;
-	rdfs:domain :WorkActivity;
+:workOrderDescription a owl:DatatypeProperty;
+	rdfs:domain :WorkOrder;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity name".
+	rdfs:label "Work order description".

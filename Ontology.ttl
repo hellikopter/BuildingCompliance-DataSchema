@@ -180,64 +180,29 @@ this:schema a owl:Ontology;
 	rdfs:label "Work task";
 	rdfs:comment "Specific job, observation or task, for example 'Asbestos location' or 'Photos taken before work'.".
 
-:WorkTaskType a owl:Class;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task type".
-
-:CollectionWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Collection work task type".
-
-:BooleanWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Boolean work task type".
-
-:DecimalWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Decimal work task type".
-
-:DateWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Date work task type".
-
-:DateTimeWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Date and time work task type".
-
-:DateTimeWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Date and time work task type".
-
-:ImageWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Image work task type".
-
-:PersonWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Person work task type".
-
-:PersonSignatureWorkTaskType a owl:Class;
-	rdfs:subClassOf :PersonWorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Person signature work task type".
-
-:MaterialResourceWorkTaskType a owl:Class;
-	rdfs:subClassOf :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Material resource work task type".
-
 :WorkTaskOutcome a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task outcome".
 
+:ImageWorkTaskOutcome a owl:Class;
+	rdfs:subClassOf :WorkTaskOutcome;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Image work task type".
+
+:PersonWorkTaskOutcome a owl:Class;
+	rdfs:subClassOf :WorkTaskOutcome;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person work task type".
+
+:PersonSignatureWorkTaskOutcome a owl:Class;
+	rdfs:subClassOf :PersonWorkTaskOutcome;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Person signature work task type".
+
+:MaterialResourceWorkTaskOutcome a owl:Class;
+	rdfs:subClassOf :WorkTaskOutcome;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Material resource work task type".
 
 # Object properties
 
@@ -452,36 +417,29 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task is followed by work task".
 
-:workTaskHasWorkTaskType a owl:ObjectProperty;
-	rdfs:domain :WorkTask;
-	rdfs:range :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task has work task type".
-
 :workTaskHasWorkTaskOutcome a owl:ObjectProperty;
 	rdfs:domain :WorkTask;
 	rdfs:range :WorkTaskOutcome;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task has work task outcome".
 
-:personWorkTaskTypeHasPerson a owl:ObjectProperty;
-	rdfs:domain :PersonWorkTaskType;
+:personWorkTaskOutcomeHasPerson a owl:ObjectProperty;
+	rdfs:domain :PersonWorkTaskOutcome;
 	rdfs:range :Person;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Person work task has person".
 
-:imageWorkTaskTypeHasInformationResource a owl:ObjectProperty;
-	rdfs:domain :ImageWorkTaskType;
+:imageWorkTaskOutcomeHasInformationResource a owl:ObjectProperty;
+	rdfs:domain :ImageWorkTaskOutcome;
 	rdfs:range :InformationResource;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Image work task has information resource".
 
-:materialResourceWorkTaskTypeHasMaterialResource a owl:ObjectProperty;
-	rdfs:domain :MaterialResourceWorkTaskType;
+:materialResourceWorkTaskOutcomeHasMaterialResource a owl:ObjectProperty;
+	rdfs:domain :MaterialResourceWorkTaskOutcome;
 	rdfs:range :MaterialResource;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Material resource work task has material resource".
-
 
 # Data type properties
 
@@ -641,12 +599,6 @@ this:schema a owl:Ontology;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task name".
-
-:workTaskOutcomeValue a owl:DatatypeProperty;
-	rdfs:domain :WorkTaskOutcome;
-	rdfs:range :WorkTaskType;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task outcome value".
 
 :serviceContractStartDate a owl:DatatypeProperty;
 	rdfs:domain :ServiceContract;

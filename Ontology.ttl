@@ -397,11 +397,11 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order flow stage has work task".
 
-:workActivityHasWorkOrderFlowStage a owl:ObjectProperty;
+:workActivityHasWorkOrderFlow a owl:ObjectProperty;
 	rdfs:domain :WorkActivity;
-	rdfs:range :WorkOrderFlowStage;
+	rdfs:range :WorkOrderFlow;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity has work order flow stage".
+	rdfs:label "Work activity has work order flow".
 
 :workTaskOutcomeHasWorkActivity a owl:ObjectProperty;
 	rdfs:domain :WorkTaskOutcome;

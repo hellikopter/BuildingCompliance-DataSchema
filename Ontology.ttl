@@ -615,7 +615,7 @@ this:schema a owl:Ontology;
 	rdfs:domain :ServiceContract;
 	rdfs:range xsd:date;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Expiry date".
+	rdfs:label "Start date".
 
 :workOrderFlowName a owl:DatatypeProperty;
 	rdfs:domain :WorkOrderFlow;

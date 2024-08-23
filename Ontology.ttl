@@ -160,6 +160,11 @@ this:schema a owl:Ontology;
 	rdfs:label "Work order flow";
 	rdfs:comment "Series of :WorkOrderFlowStage that define work.".
 
+:WorkOrderFlowStageRoute a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow stage route";
+	rdfs:comment "Orders :WorkOrderFlowStage in :WorkOrderFlow.".
+
 :WorkOrderFlowStage a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order flow stage";
@@ -174,6 +179,11 @@ this:schema a owl:Ontology;
 	rdfs:subClassOf :WorkOrderFlowStage;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Cancellation work activity".
+
+:WorkTaskRoute a owl:Class;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task route";
+	rdfs:comment "Orders :WorkTask in :WorkOrderFlowStage.".
 
 :WorkTask a owl:Class;
 	rdfs:isDefinedBy this:schema;
@@ -203,6 +213,7 @@ this:schema a owl:Ontology;
 	rdfs:subClassOf :WorkTaskOutcome;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Material resource work task type".
+
 
 # Object properties
 
@@ -381,23 +392,29 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order has work order flow".
 
-:workOrderFlowStageIsFollowedByWorkOrderFlow a owl:ObjectProperty;
-	rdfs:domain :WorkOrderFlowStage;
+:workOrderFlowHasWorkOrderFlowStageRoute a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlow;
+	rdfs:range :WorkOrderFlowStageRoute;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order flow has work order stage flow route".
+
+:workOrderFlowStageRouteIsToWorkOrderFlowStage a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlowStageRoute;
 	rdfs:range :WorkOrderFlowStage;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order flow stage is followed by work order flow stage".
+	rdfs:label "Work order flow stage route is to work order flow stage".
 
-:workOrderFlowStageHasWorkOrderFlow a owl:ObjectProperty;
-	rdfs:domain :WorkOrderFlowStage;
-	rdfs:range :WorkOrderFlow;
+:workOrderFlowStageRouteIsFromWorkOrderFlowStage a owl:ObjectProperty;
+	rdfs:domain :WorkOrderFlowStageRoute;
+	rdfs:range :WorkOrderFlowStage;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order flow stage has work order flow".
+	rdfs:label "Work order flow stage route is from work order flow stage".
 
-:workOrderFlowStageHasWorkTask a owl:ObjectProperty;
+:workOrderFlowStageHasWorkTaskRoute a owl:ObjectProperty;
 	rdfs:domain :WorkOrderFlowStage;
-	rdfs:range :WorkTask;
+	rdfs:range :WorkTaskRoute;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order flow stage has work task".
+	rdfs:label "Work order flow stage has work task route".
 
 :workTaskOutcomeHasWorkTask a owl:ObjectProperty;
 	rdfs:domain :WorkTaskOutcome;
@@ -411,11 +428,17 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task outcome has operative".
 
-:workTaskIsFollowedByWorkTask a owl:ObjectProperty;
-	rdfs:domain :WorkTask;
+:workTaskRouteIsToByWorkTask a owl:ObjectProperty;
+	rdfs:domain :WorkTaskRoute;
 	rdfs:range :WorkTask;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task is followed by work task".
+	rdfs:label "Work task route is to work task".
+
+:workTaskRouteIsFromByWorkTask a owl:ObjectProperty;
+	rdfs:domain :WorkTaskRoute;
+	rdfs:range :WorkTask;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work task route is from work task".
 
 :personWorkTaskOutcomeHasPerson a owl:ObjectProperty;
 	rdfs:domain :PersonWorkTaskOutcome;

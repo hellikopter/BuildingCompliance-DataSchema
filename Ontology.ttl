@@ -180,10 +180,6 @@ this:schema a owl:Ontology;
 	rdfs:label "Work task";
 	rdfs:comment "Specific job, observation or task, for example 'Asbestos location' or 'Photos taken before work'.".
 
-:WorkActivity a owl:Class;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity".
-
 :WorkTaskOutcome a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task outcome".
@@ -373,11 +369,17 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order has contract manager".
 
-:workOrderHasWorkActivity a owl:ObjectProperty;
+:workOrderHasWorkTaskOutcome a owl:ObjectProperty;
 	rdfs:domain :WorkOrder;
-	rdfs:range :WorkActivity;
+	rdfs:range :WorkTaskOutcome;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order has work activity".
+	rdfs:label "Work order has work task outcome".
+
+:workOrderHasWorkOrderFlow a owl:ObjectProperty;
+	rdfs:domain :WorkOrder;
+	rdfs:range :WorkOrderFlow;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Work order has work order flow".
 
 :workOrderFlowStageIsFollowedByWorkOrderFlow a owl:ObjectProperty;
 	rdfs:domain :WorkOrderFlowStage;
@@ -397,29 +399,17 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order flow stage has work task".
 
-:workActivityHasWorkOrderFlow a owl:ObjectProperty;
-	rdfs:domain :WorkActivity;
-	rdfs:range :WorkOrderFlow;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity has work order flow".
-
-:workTaskOutcomeHasWorkActivity a owl:ObjectProperty;
-	rdfs:domain :WorkTaskOutcome;
-	rdfs:range :WorkActivity;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task outcome has work activity".
-
 :workTaskOutcomeHasWorkTask a owl:ObjectProperty;
 	rdfs:domain :WorkTaskOutcome;
 	rdfs:range :WorkTask;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task outcome has work task".
 
-:workActivityHasOperative a owl:ObjectProperty;
-	rdfs:domain :WorkActivity;
+:workTaskOutcomeHasOperative a owl:ObjectProperty;
+	rdfs:domain :WorkTaskOutcome;
 	rdfs:range :Operative;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work activity has operative".
+	rdfs:label "Work task outcome has operative".
 
 :workTaskIsFollowedByWorkTask a owl:ObjectProperty;
 	rdfs:domain :WorkTask;
@@ -603,7 +593,7 @@ this:schema a owl:Ontology;
 	rdfs:domain :WorkOrderFlowStage;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task name".
+	rdfs:label "Work order flow stage name".
 
 :workTaskName a owl:DatatypeProperty;
 	rdfs:domain :WorkTask;

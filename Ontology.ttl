@@ -160,25 +160,31 @@ this:schema a owl:Ontology;
 	rdfs:label "Work order flow";
 	rdfs:comment "Definition of work.".
 
-:WorkTaskRoute a owl:Class;
+:Job a owl:Class;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task route";
+	rdfs:label "Job";
 	rdfs:comment "Groups :WorkTask.".
+
+:SuspensionJob a owl:Class;
+	rdfs:subClassOf :Job;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Suspension job".
+
+:CancellationJob a owl:Class;
+	rdfs:subClassOf :Job;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Cancellation job".
+
+:ApprovalJob a owl:Class;
+	rdfs:subClassOf :Job;
+	rdfs:isDefinedBy this:schema;
+	rdfs:label "Approval job";
+	rdfs:comment "Acts as a gateway to :Job(s) that requires approval.".
 
 :WorkTask a owl:Class;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task";
-	rdfs:comment "Specific job, observation or task, for example 'Asbestos location' or 'Photos taken before work'.".
-
-:SuspensionTask a owl:Class;
-	rdfs:subClassOf :WorkTask;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Suspension task".
-
-:CancellationTask a owl:Class;
-	rdfs:subClassOf :WorkTask;
-	rdfs:isDefinedBy this:schema;
-	rdfs:label "Cancellation task".
+	rdfs:comment "Specific observation or task, for example 'Asbestos location' or 'Photos taken before work'.".
 
 :ImageWorkTask a owl:Class;
 	rdfs:subClassOf :WorkTask;
@@ -382,11 +388,11 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order has work order flow".
 
-:workOrderFlowHasWorkTaskRoute a owl:ObjectProperty;
+:workOrderFlowHasJob a owl:ObjectProperty;
 	rdfs:domain :WorkOrderFlow;
-	rdfs:range :WorkTaskRoute;
+	rdfs:range :Job;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work order flow has work task route".
+	rdfs:label "Work order flow has job".
 
 :workTaskOutcomeHasWorkTask a owl:ObjectProperty;
 	rdfs:domain :WorkTaskOutcome;
@@ -400,17 +406,17 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work task outcome has operative".
 
-:workTaskRouteHasWorkTask a owl:ObjectProperty;
-	rdfs:domain :WorkTaskRoute;
+:jobHasWorkTask a owl:ObjectProperty;
+	rdfs:domain :Job;
 	rdfs:range :WorkTask;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task route has work task".
+	rdfs:label "Job has work task".
 
-:workTaskRouteImpliesWorkTaskRoute a owl:ObjectProperty;
-	rdfs:domain :WorkTaskRoute;
-	rdfs:range :WorkTaskRoute;
+:approvalJobApprovesJob a owl:ObjectProperty;
+	rdfs:domain :ApprovalJob;
+	rdfs:range :Job;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task route implies work task route".
+	rdfs:label "Approval job approves job".
 
 #:personWorkTaskOutcomeHasPerson a owl:ObjectProperty;
 #	rdfs:domain :PersonWorkTaskOutcome;
@@ -608,8 +614,8 @@ this:schema a owl:Ontology;
 	rdfs:isDefinedBy this:schema;
 	rdfs:label "Work order description".
 
-:workTaskRouteName a owl:DatatypeProperty;
-	rdfs:domain :WorkTaskRoute;
+:jobName a owl:DatatypeProperty;
+	rdfs:domain :Job;
 	rdfs:range xsd:string;
 	rdfs:isDefinedBy this:schema;
-	rdfs:label "Work task route name".
+	rdfs:label "Job name".
